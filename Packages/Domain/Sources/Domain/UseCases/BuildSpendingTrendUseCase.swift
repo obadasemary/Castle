@@ -1,4 +1,5 @@
 import Core
+import Foundation
 
 public struct MonthlySpend: Hashable, Sendable {
     public let year: Int

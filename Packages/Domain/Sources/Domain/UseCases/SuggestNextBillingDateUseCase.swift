@@ -1,4 +1,5 @@
 import Core
+import Foundation
 
 public struct SuggestNextBillingDateUseCase: Sendable {
     private let clock: any Clock

@@ -1,4 +1,5 @@
 import Core
+import Foundation
 
 public struct CategorySpend: Hashable, Sendable {
     public let category: Category
@@ -29,14 +30,15 @@ public struct BuildCategoryBreakdownUseCase: Sendable {
         }
         let grandTotal = breakdown.values.reduce(0, +)
         guard grandTotal > 0 else { return [] }
-        return breakdown
-            .map { category, amount in
-                CategorySpend(
-                    category: category,
-                    total: Money(amount: amount, currencyCode: currencyCode),
-                    percentage: Double(truncating: (amount / grandTotal * 100) as NSDecimalNumber)
-                )
-            }
-            .sorted { $0.total.amount > $1.total.amount }
+        let items: [CategorySpend] = breakdown.map { category, amount in
+            let ratio = amount / grandTotal * 100
+            let percentage = Double(truncating: ratio as NSDecimalNumber)
+            return CategorySpend(
+                category: category,
+                total: Money(amount: amount, currencyCode: currencyCode),
+                percentage: percentage
+            )
+        }
+        return items.sorted { $0.total.amount > $1.total.amount }
     }
 }

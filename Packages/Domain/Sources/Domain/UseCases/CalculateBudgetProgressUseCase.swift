@@ -1,4 +1,5 @@
 import Core
+import Foundation
 
 public struct BudgetProgress: Sendable {
     public let spent: Money
@@ -34,10 +35,10 @@ public struct CalculateBudgetProgressUseCase: Sendable {
         else { return nil }
 
         let active = try await subscriptionRepository.fetchAll().filter { $0.status == .active }
-        let spentAmount = active.reduce(Decimal.zero) { sum, sub in
+        let spentAmount = active.reduce(into: Decimal.zero) { sum, sub in
             let monthly = BillingCycleCalculator.monthlyEquivalent(price: sub.price, cycle: sub.billingCycle)
-            guard monthly.currencyCode == currencyCode else { return sum }
-            return sum + monthly.amount
+            guard monthly.currencyCode == currencyCode else { return }
+            sum += monthly.amount
         }
         let spent = Money(amount: spentAmount, currencyCode: currencyCode)
         let fraction = min(

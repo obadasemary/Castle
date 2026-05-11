@@ -7,6 +7,18 @@ public enum ValidationError: Error, Sendable, Equatable {
     case pastBillingDate
 }
 
+public struct ValidationErrors: Error, Sendable, Equatable {
+    public let values: [ValidationError]
+
+    public init(_ values: [ValidationError]) {
+        self.values = values
+    }
+
+    public func contains(_ error: ValidationError) -> Bool {
+        values.contains(error)
+    }
+}
+
 public struct ValidateSubscriptionInputUseCase: Sendable {
     private let clock: any Clock
 
@@ -14,7 +26,7 @@ public struct ValidateSubscriptionInputUseCase: Sendable {
         self.clock = clock
     }
 
-    public func execute(_ input: SubscriptionInput) -> Result<SubscriptionInput, [ValidationError]> {
+    public func execute(_ input: SubscriptionInput) -> Result<SubscriptionInput, ValidationErrors> {
         var errors: [ValidationError] = []
         if input.serviceName.trimmingCharacters(in: .whitespaces).isEmpty {
             errors.append(.emptyServiceName)
@@ -29,6 +41,6 @@ public struct ValidateSubscriptionInputUseCase: Sendable {
         if input.nextBillingDate < clock.now {
             errors.append(.pastBillingDate)
         }
-        return errors.isEmpty ? .success(input) : .failure(errors)
+        return errors.isEmpty ? .success(input) : .failure(ValidationErrors(errors))
     }
 }
