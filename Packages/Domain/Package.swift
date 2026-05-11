@@ -23,7 +23,10 @@ let package = Package(
         ),
         .testTarget(
             name: "DomainTests",
-            dependencies: ["Domain"],
+            dependencies: [
+                "Domain",
+                .product(name: "Core", package: "Core")
+            ],
             path: "Tests/DomainTests"
         )
     ]
