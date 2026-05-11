@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:Castle.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Packages/Core">
+   </FileRef>
+   <FileRef
+      location = "group:Packages/Domain">
+   </FileRef>
+   <FileRef
+      location = "group:Packages/Data">
+   </FileRef>
+   <FileRef
+      location = "group:Packages/Presentation">
+   </FileRef>
+</Workspace>
