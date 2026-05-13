@@ -1,10 +1,3 @@
-// ── FILE: Castle/App/AppEnvironment.swift ──
-//
-// Process-wide runtime configuration: build flavour, locale, currency, and
-// the resolved dependency container. The container itself stays empty in
-// PR 1 and is populated as later PRs land Domain use cases, SwiftData
-// repositories, and Presentation factories.
-
 import Foundation
 import Observation
 
@@ -17,10 +10,12 @@ final class AppEnvironment {
 
     let buildFlavour: BuildFlavour
     let bundleIdentifier: String
+    let container: AppDependencyContainer
 
-    init(buildFlavour: BuildFlavour, bundleIdentifier: String) {
+    init(buildFlavour: BuildFlavour, bundleIdentifier: String, container: AppDependencyContainer) {
         self.buildFlavour = buildFlavour
         self.bundleIdentifier = bundleIdentifier
+        self.container = container
     }
 
     static func live() -> AppEnvironment {
@@ -31,7 +26,8 @@ final class AppEnvironment {
         #endif
         return AppEnvironment(
             buildFlavour: flavour,
-            bundleIdentifier: Bundle.main.bundleIdentifier ?? "com.SamuraiStudios.Castle"
+            bundleIdentifier: Bundle.main.bundleIdentifier ?? "com.SamuraiStudios.Castle",
+            container: AppDependencyContainer.live()
         )
     }
 }

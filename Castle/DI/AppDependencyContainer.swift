@@ -1,13 +1,5 @@
-// ── FILE: Castle/DI/AppDependencyContainer.swift ──
-//
-// Composition root. Owns the SwiftData ModelContainer, concrete repositories,
-// use cases, and ViewModel factories. Inject only Domain protocols into
-// Presentation — never concrete Data types.
-//
-// PR 1 stub: the real wiring lands in PR 2 (Domain protocols and use case
-// defaults) and PR 3 (SwiftData ModelContainer + repository implementations).
-
 import Foundation
+import SwiftData
 import Core
 import Domain
 import Data
@@ -15,8 +7,61 @@ import Presentation
 
 @MainActor
 final class AppDependencyContainer {
-    init() {
-        // Real construction happens in PR 3 once SwiftDataModelContainerFactory
-        // and the ModelActor repositories exist.
+    let modelContainer: ModelContainer
+    let coordinator: AppCoordinator
+    let clock: any Clock
+    let calendarProvider: any CalendarProvider
+    let popularServicesCatalog: any PopularServicesCatalog
+
+    let subscriptionRepository: any SubscriptionRepository
+    let paymentRepository: any PaymentRepository
+    let notificationSettingsRepository: any NotificationSettingsRepository
+    let userProfileRepository: any UserProfileRepository
+    let reminderScheduler: any SubscriptionReminderScheduling
+
+    private init(
+        modelContainer: ModelContainer,
+        coordinator: AppCoordinator,
+        clock: any Clock,
+        calendarProvider: any CalendarProvider,
+        popularServicesCatalog: any PopularServicesCatalog,
+        subscriptionRepository: any SubscriptionRepository,
+        paymentRepository: any PaymentRepository,
+        notificationSettingsRepository: any NotificationSettingsRepository,
+        userProfileRepository: any UserProfileRepository,
+        reminderScheduler: any SubscriptionReminderScheduling
+    ) {
+        self.modelContainer = modelContainer
+        self.coordinator = coordinator
+        self.clock = clock
+        self.calendarProvider = calendarProvider
+        self.popularServicesCatalog = popularServicesCatalog
+        self.subscriptionRepository = subscriptionRepository
+        self.paymentRepository = paymentRepository
+        self.notificationSettingsRepository = notificationSettingsRepository
+        self.userProfileRepository = userProfileRepository
+        self.reminderScheduler = reminderScheduler
+    }
+
+    static func live() -> AppDependencyContainer {
+        let modelContainer: ModelContainer
+        do {
+            modelContainer = try ModelContainerFactory.production()
+        } catch {
+            assertionFailure("Falling back to in-memory ModelContainer: \(error)")
+            modelContainer = try! ModelContainerFactory.inMemory()
+        }
+        return AppDependencyContainer(
+            modelContainer: modelContainer,
+            coordinator: AppCoordinator(),
+            clock: SystemClock(),
+            calendarProvider: SystemCalendarProvider(),
+            popularServicesCatalog: BundledPopularServicesCatalog(),
+            subscriptionRepository: SwiftDataSubscriptionRepository(modelContainer: modelContainer),
+            paymentRepository: SwiftDataPaymentRepository(modelContainer: modelContainer),
+            notificationSettingsRepository: SwiftDataNotificationSettingsRepository(modelContainer: modelContainer),
+            userProfileRepository: SwiftDataUserProfileRepository(modelContainer: modelContainer),
+            reminderScheduler: UNUserNotificationScheduler()
+        )
     }
 }
