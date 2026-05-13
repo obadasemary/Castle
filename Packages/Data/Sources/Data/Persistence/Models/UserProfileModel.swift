@@ -18,6 +18,10 @@ final class UserProfileModel {
         monthlyBudgetCurrencyCode: String?,
         appearanceRaw: String
     ) {
+        precondition(
+            (monthlyBudgetAmount == nil) == (monthlyBudgetCurrencyCode == nil),
+            "monthlyBudget amount and currency must both be set or both be nil"
+        )
         self.id = id
         self.displayName = displayName
         self.preferredCurrencyCode = preferredCurrencyCode

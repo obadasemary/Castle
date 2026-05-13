@@ -35,7 +35,7 @@ public struct ValidateSubscriptionInputUseCase: Sendable {
             errors.append(.nonPositivePrice)
         }
         let code = input.currencyCode
-        if code.count != 3 || !code.allSatisfy(\.isLetter) {
+        if code.count != 3 || !code.allSatisfy({ $0.isLetter && $0.isUppercase }) {
             errors.append(.invalidCurrencyCode)
         }
         if input.nextBillingDate < clock.now {

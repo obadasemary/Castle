@@ -16,7 +16,10 @@ public struct Money: Hashable, Codable, Sendable {
 
 extension Money: Comparable {
     public static func < (lhs: Money, rhs: Money) -> Bool {
-        lhs.amount < rhs.amount
+        if lhs.currencyCode != rhs.currencyCode {
+            return lhs.currencyCode < rhs.currencyCode
+        }
+        return lhs.amount < rhs.amount
     }
 }
 

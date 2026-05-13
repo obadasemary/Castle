@@ -12,11 +12,13 @@ public struct UNUserNotificationScheduler: SubscriptionReminderScheduling {
         guard granted else { return }
 
         let calendar = Calendar.current
-        let triggerDate = calendar.date(
+        let normalizedLeadDays = max(leadDays, 0)
+        let computedDate = calendar.date(
             byAdding: .day,
-            value: -leadDays,
+            value: -normalizedLeadDays,
             to: subscription.nextBillingDate
         ) ?? subscription.nextBillingDate
+        let triggerDate = max(computedDate, Date().addingTimeInterval(60))
 
         let content = UNMutableNotificationContent()
         content.title = "Upcoming: \(subscription.serviceName)"

@@ -26,7 +26,7 @@ public struct AddSubscriptionUseCase: Sendable {
             notes: input.notes
         )
         try await repository.save(subscription)
-        if let offset = input.reminderOffset {
+        if let offset = input.reminderOffset, offset > 0 {
             try await reminderScheduling?.schedule(subscription: subscription, leadDays: offset)
         }
         return subscription

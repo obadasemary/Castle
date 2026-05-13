@@ -13,8 +13,8 @@ public struct ScheduleSubscriptionReminderUseCase: Sendable {
     }
 
     public func execute(subscriptionID: UUID, leadDays: Int) async throws {
-        guard let subscription = try await subscriptionRepository.fetch(id: subscriptionID) else { return }
         if leadDays > 0 {
+            guard let subscription = try await subscriptionRepository.fetch(id: subscriptionID) else { return }
             try await reminderScheduling.schedule(subscription: subscription, leadDays: leadDays)
         } else {
             try await reminderScheduling.cancel(subscriptionID: subscriptionID)

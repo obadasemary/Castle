@@ -12,7 +12,7 @@ public struct UpdateSubscriptionUseCase: Sendable {
 
     public func execute(_ subscription: Subscription) async throws {
         try await repository.save(subscription)
-        if let offset = subscription.reminderOffset {
+        if let offset = subscription.reminderOffset, offset > 0 {
             try await reminderScheduling?.reschedule(subscription: subscription, leadDays: offset)
         } else {
             try await reminderScheduling?.cancel(subscriptionID: subscription.id)
