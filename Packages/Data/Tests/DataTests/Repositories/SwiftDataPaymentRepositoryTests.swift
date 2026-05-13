@@ -56,11 +56,11 @@ struct SwiftDataPaymentRepositoryTests {
         let windowStart = now
         let windowEnd = now.addingTimeInterval(86400 * 7)
 
-        try await repo.save(makePayment(date: now.addingTimeInterval(86400), currencyCode: "USD"))
-        try await repo.save(makePayment(date: now.addingTimeInterval(86400 * 3), currencyCode: "USD"))
-        try await repo.save(makePayment(date: now.addingTimeInterval(-86400), currencyCode: "USD"))   // before window
-        try await repo.save(makePayment(date: now.addingTimeInterval(86400 * 10), currencyCode: "USD")) // after window
-        try await repo.save(makePayment(date: now.addingTimeInterval(86400), currencyCode: "EUR"))    // wrong currency
+        try await repo.save(makePayment(currencyCode: "USD", date: now.addingTimeInterval(86400)))
+        try await repo.save(makePayment(currencyCode: "USD", date: now.addingTimeInterval(86400 * 3)))
+        try await repo.save(makePayment(currencyCode: "USD", date: now.addingTimeInterval(-86400)))   // before window
+        try await repo.save(makePayment(currencyCode: "USD", date: now.addingTimeInterval(86400 * 10))) // after window
+        try await repo.save(makePayment(currencyCode: "EUR", date: now.addingTimeInterval(86400)))    // wrong currency
 
         let usd = try await repo.fetchPayments(from: windowStart, to: windowEnd, currencyCode: "USD")
 
