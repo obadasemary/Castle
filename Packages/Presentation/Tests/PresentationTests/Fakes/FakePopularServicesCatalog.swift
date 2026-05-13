@@ -2,8 +2,8 @@ import Foundation
 import Core
 import Domain
 
-final class FakePopularServicesCatalog: PopularServicesCatalog, @unchecked Sendable {
-    var services: [PopularService]
+final class FakePopularServicesCatalog: PopularServicesCatalog, Sendable {
+    let services: [PopularService]
 
     init(services: [PopularService] = FakePopularServicesCatalog.defaultServices) {
         self.services = services

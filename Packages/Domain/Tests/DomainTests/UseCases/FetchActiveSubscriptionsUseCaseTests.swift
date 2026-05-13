@@ -22,7 +22,6 @@ struct FetchActiveSubscriptionsUseCaseTests {
     @Test("Returns only active subscriptions sorted by billing date")
     func onlyActiveReturned() async throws {
         let repo = FakeSubscriptionRepository()
-        repo.subscriptions = [:]
         let active1 = makeSubscription(name: "Netflix", status: .active, daysFromNow: 5)
         let active2 = makeSubscription(name: "Spotify", status: .active, daysFromNow: 2)
         let archived = makeSubscription(name: "Old", status: .archived, daysFromNow: 1)

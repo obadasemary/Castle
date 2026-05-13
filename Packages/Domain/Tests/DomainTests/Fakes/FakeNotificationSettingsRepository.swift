@@ -1,8 +1,12 @@
 import Domain
 
-final class FakeNotificationSettingsRepository: NotificationSettingsRepository, @unchecked Sendable {
+actor FakeNotificationSettingsRepository: NotificationSettingsRepository {
     var preferences = NotificationPreference()
     var saveCallCount = 0
+
+    func setPreferences(_ new: NotificationPreference) {
+        preferences = new
+    }
 
     func fetchPreferences() async throws -> NotificationPreference {
         preferences

@@ -12,9 +12,9 @@ struct SubscriptionDetailViewModelTests {
         targetID: UUID,
         clockNow: Date = Date(timeIntervalSince1970: 1_700_000_000),
         router: FakeSubscriptionsRouter? = nil
-    ) -> (SubscriptionDetailViewModel, FakeSubscriptionRepository, FakePaymentRepository, FakeReminderScheduling) {
+    ) async -> (SubscriptionDetailViewModel, FakeSubscriptionRepository, FakePaymentRepository, FakeReminderScheduling) {
         let repo = FakeSubscriptionRepository()
-        for sub in existing { repo.subscriptions[sub.id] = sub }
+        for sub in existing { await repo.seed(sub) }
         let payments = FakePaymentRepository()
         let scheduling = FakeReminderScheduling()
         let clock = FakeClock(now: clockNow)
@@ -53,11 +53,11 @@ struct SubscriptionDetailViewModelTests {
     @Test("load populates detail with payment history sorted desc")
     func loadPopulatesDetail() async {
         let sub = sample()
-        let (vm, _, payments, _) = makeViewModel(existing: [sub], targetID: sub.id)
+        let (vm, _, payments, _) = await makeViewModel(existing: [sub], targetID: sub.id)
         let earlier = PaymentRecord(subscriptionID: sub.id, subscriptionName: sub.serviceName, amount: sub.price, date: Date(timeIntervalSince1970: 1_600_000_000))
         let later = PaymentRecord(subscriptionID: sub.id, subscriptionName: sub.serviceName, amount: sub.price, date: Date(timeIntervalSince1970: 1_650_000_000))
-        try? await payments.save(earlier)
-        try? await payments.save(later)
+        await payments.seed(earlier)
+        await payments.seed(later)
 
         await vm.load()
 
@@ -72,7 +72,7 @@ struct SubscriptionDetailViewModelTests {
 
     @Test("load returns notFound when missing")
     func loadNotFound() async {
-        let (vm, _, _, _) = makeViewModel(targetID: UUID())
+        let (vm, _, _, _) = await makeViewModel(targetID: UUID())
         await vm.load()
         if case .notFound = vm.state {
             #expect(true)
@@ -84,26 +84,26 @@ struct SubscriptionDetailViewModelTests {
     @Test("toggleReminder enabled sets offset and reschedules")
     func toggleReminderEnabled() async {
         let sub = sample(reminderOffset: nil)
-        let (vm, repo, _, scheduling) = makeViewModel(existing: [sub], targetID: sub.id)
+        let (vm, repo, _, scheduling) = await makeViewModel(existing: [sub], targetID: sub.id)
         await vm.load()
 
         await vm.toggleReminder(enabled: true, leadDays: 3)
 
-        #expect(repo.subscriptions[sub.id]?.reminderOffset == 3)
-        #expect(scheduling.scheduledLeadDays[sub.id] == 3)
+        #expect(await repo.subscriptions[sub.id]?.reminderOffset == 3)
+        #expect(await scheduling.scheduledLeadDays[sub.id] == 3)
         #expect(vm.isReminderEnabled)
     }
 
     @Test("toggleReminder disabled clears offset and cancels")
     func toggleReminderDisabled() async {
         let sub = sample(reminderOffset: 2)
-        let (vm, repo, _, scheduling) = makeViewModel(existing: [sub], targetID: sub.id)
+        let (vm, repo, _, scheduling) = await makeViewModel(existing: [sub], targetID: sub.id)
         await vm.load()
 
         await vm.toggleReminder(enabled: false)
 
-        #expect(repo.subscriptions[sub.id]?.reminderOffset == nil)
-        #expect(scheduling.canceledIDs.contains(sub.id))
+        #expect(await repo.subscriptions[sub.id]?.reminderOffset == nil)
+        #expect(await scheduling.canceledIDs.contains(sub.id))
         #expect(vm.isReminderEnabled == false)
     }
 
@@ -111,12 +111,12 @@ struct SubscriptionDetailViewModelTests {
     func archiveDismisses() async {
         let sub = sample()
         let router = FakeSubscriptionsRouter()
-        let (vm, repo, _, _) = makeViewModel(existing: [sub], targetID: sub.id, router: router)
+        let (vm, repo, _, _) = await makeViewModel(existing: [sub], targetID: sub.id, router: router)
         await vm.load()
 
         await vm.archive()
 
-        #expect(repo.subscriptions[sub.id]?.status == .archived)
+        #expect(await repo.subscriptions[sub.id]?.status == .archived)
         #expect(router.dismissCallCount == 1)
     }
 
@@ -124,12 +124,12 @@ struct SubscriptionDetailViewModelTests {
     func deleteDismisses() async {
         let sub = sample()
         let router = FakeSubscriptionsRouter()
-        let (vm, repo, _, _) = makeViewModel(existing: [sub], targetID: sub.id, router: router)
+        let (vm, repo, _, _) = await makeViewModel(existing: [sub], targetID: sub.id, router: router)
         await vm.load()
 
         await vm.delete()
 
-        #expect(repo.deletedIDs.contains(sub.id))
+        #expect(await repo.deletedIDs.contains(sub.id))
         #expect(router.dismissCallCount == 1)
     }
 }

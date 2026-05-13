@@ -2,9 +2,13 @@ import Foundation
 import Domain
 import Core
 
-final class FakePaymentRepository: PaymentRepository, @unchecked Sendable {
+actor FakePaymentRepository: PaymentRepository {
     var records: [PaymentRecord] = []
     var deletedSubscriptionIDs: [UUID] = []
+
+    func seed(_ record: PaymentRecord) {
+        records.append(record)
+    }
 
     func fetchAll(subscriptionID: UUID) async throws -> [PaymentRecord] {
         records.filter { $0.subscriptionID == subscriptionID }

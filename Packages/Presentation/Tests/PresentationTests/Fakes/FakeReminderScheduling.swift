@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class FakeReminderScheduling: SubscriptionReminderScheduling, @unchecked Sendable {
+actor FakeReminderScheduling: SubscriptionReminderScheduling {
     var scheduledLeadDays: [UUID: Int] = [:]
     var canceledIDs: [UUID] = []
 

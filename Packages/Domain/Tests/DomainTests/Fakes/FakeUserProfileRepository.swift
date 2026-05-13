@@ -1,8 +1,12 @@
 import Domain
 
-final class FakeUserProfileRepository: UserProfileRepository, @unchecked Sendable {
+actor FakeUserProfileRepository: UserProfileRepository {
     var profile: UserProfile?
     var saveCallCount = 0
+
+    func setProfile(_ p: UserProfile?) {
+        profile = p
+    }
 
     func fetchProfile() async throws -> UserProfile? { profile }
 

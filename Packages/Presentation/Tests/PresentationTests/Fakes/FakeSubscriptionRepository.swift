@@ -1,10 +1,14 @@
 import Foundation
 import Domain
 
-final class FakeSubscriptionRepository: SubscriptionRepository, @unchecked Sendable {
+actor FakeSubscriptionRepository: SubscriptionRepository {
     var subscriptions: [UUID: Subscription] = [:]
     var savedCallCount = 0
     var deletedIDs: [UUID] = []
+
+    func seed(_ subscription: Subscription) {
+        subscriptions[subscription.id] = subscription
+    }
 
     func fetchAll() async throws -> [Subscription] {
         Array(subscriptions.values)

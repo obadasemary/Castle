@@ -27,8 +27,8 @@ struct AddSubscriptionUseCaseTests {
         #expect(result.serviceName == "Netflix")
         #expect(result.price.amount == 15.99)
         #expect(result.price.currencyCode == "USD")
-        #expect(repo.savedCallCount == 1)
-        #expect(repo.subscriptions[result.id] != nil)
+        #expect(await repo.savedCallCount == 1)
+        #expect(await repo.subscriptions[result.id] != nil)
     }
 
     @Test("Subscription starts with active status")

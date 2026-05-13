@@ -48,7 +48,7 @@ struct AddSubscriptionViewModelTests {
     }
 
     @Test("selectPopular pre-fills input")
-    func selectPopularPrefills() async {
+    func selectPopularPrefills() {
         let (vm, _, _) = makeViewModel()
         let netflix = FakePopularServicesCatalog.defaultServices[0]
         vm.selectPopular(netflix)
@@ -62,7 +62,7 @@ struct AddSubscriptionViewModelTests {
     }
 
     @Test("selectCustom resets input to defaults")
-    func selectCustomResets() async {
+    func selectCustomResets() {
         let (vm, _, _) = makeViewModel()
         vm.selectPopular(FakePopularServicesCatalog.defaultServices[0])
         vm.selectCustom()
@@ -78,7 +78,7 @@ struct AddSubscriptionViewModelTests {
         #expect(saved == false)
         #expect(vm.validationErrors.contains(.emptyServiceName))
         #expect(vm.validationErrors.contains(.nonPositivePrice))
-        #expect(repo.savedCallCount == 0)
+        #expect(await repo.savedCallCount == 0)
     }
 
     @Test("save succeeds with valid input")
@@ -88,7 +88,7 @@ struct AddSubscriptionViewModelTests {
         let saved = await vm.save()
         #expect(saved)
         #expect(vm.validationErrors.isEmpty)
-        #expect(repo.savedCallCount == 1)
+        #expect(await repo.savedCallCount == 1)
     }
 
     @Test("save with reminder schedules notification")
@@ -98,7 +98,7 @@ struct AddSubscriptionViewModelTests {
         vm.input.reminderOffset = 2
         let saved = await vm.save()
         #expect(saved)
-        #expect(scheduling.scheduledLeadDays.values.contains(2))
+        #expect(await scheduling.scheduledLeadDays.values.contains(2))
     }
 
     @Test("cancel calls router.dismiss")

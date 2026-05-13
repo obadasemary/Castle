@@ -10,9 +10,9 @@ struct SubscriptionsListViewModelTests {
     private func makeViewModel(
         subscriptions: [Subscription] = [],
         router: FakeSubscriptionsRouter? = nil
-    ) -> (SubscriptionsListViewModel, FakeSubscriptionRepository, FakePaymentRepository, FakeReminderScheduling) {
+    ) async -> (SubscriptionsListViewModel, FakeSubscriptionRepository, FakePaymentRepository, FakeReminderScheduling) {
         let repo = FakeSubscriptionRepository()
-        for sub in subscriptions { repo.subscriptions[sub.id] = sub }
+        for sub in subscriptions { await repo.seed(sub) }
         let payments = FakePaymentRepository()
         let scheduling = FakeReminderScheduling()
         let vm = SubscriptionsListViewModel(
@@ -41,8 +41,8 @@ struct SubscriptionsListViewModelTests {
     }
 
     @Test("starts in idle state with active filter")
-    func startsIdleActive() {
-        let (vm, _, _, _) = makeViewModel()
+    func startsIdleActive() async {
+        let (vm, _, _, _) = await makeViewModel()
         #expect(vm.state == .idle)
         #expect(vm.filter == .active)
     }
@@ -52,7 +52,7 @@ struct SubscriptionsListViewModelTests {
         let later = subscription(name: "Later", daysFromNow: 30)
         let sooner = subscription(name: "Sooner", daysFromNow: 3)
         let archived = subscription(name: "Old", status: .archived)
-        let (vm, _, _, _) = makeViewModel(subscriptions: [later, sooner, archived])
+        let (vm, _, _, _) = await makeViewModel(subscriptions: [later, sooner, archived])
 
         await vm.load()
 
@@ -67,7 +67,7 @@ struct SubscriptionsListViewModelTests {
     func setFilterArchived() async {
         let active = subscription(name: "Active")
         let archived = subscription(name: "Archived", status: .archived)
-        let (vm, _, _, _) = makeViewModel(subscriptions: [active, archived])
+        let (vm, _, _, _) = await makeViewModel(subscriptions: [active, archived])
 
         await vm.load()
         await vm.setFilter(.archived)
@@ -83,13 +83,13 @@ struct SubscriptionsListViewModelTests {
     @Test("archive flips status and reloads")
     func archiveFlipsStatus() async {
         let sub = subscription(name: "ToArchive")
-        let (vm, repo, _, scheduling) = makeViewModel(subscriptions: [sub])
+        let (vm, repo, _, scheduling) = await makeViewModel(subscriptions: [sub])
 
         await vm.load()
         await vm.archive(id: sub.id)
 
-        #expect(repo.subscriptions[sub.id]?.status == .archived)
-        #expect(scheduling.canceledIDs.contains(sub.id))
+        #expect(await repo.subscriptions[sub.id]?.status == .archived)
+        #expect(await scheduling.canceledIDs.contains(sub.id))
         guard case .loaded(let subs) = vm.state else {
             Issue.record("expected loaded; got \(vm.state)")
             return
@@ -100,8 +100,8 @@ struct SubscriptionsListViewModelTests {
     @Test("delete removes subscription and payment history")
     func deleteRemovesSubscriptionAndPayments() async {
         let sub = subscription(name: "ToDelete")
-        let (vm, repo, payments, scheduling) = makeViewModel(subscriptions: [sub])
-        try? await payments.save(PaymentRecord(
+        let (vm, repo, payments, scheduling) = await makeViewModel(subscriptions: [sub])
+        await payments.seed(PaymentRecord(
             subscriptionID: sub.id,
             subscriptionName: sub.serviceName,
             amount: sub.price,
@@ -110,23 +110,23 @@ struct SubscriptionsListViewModelTests {
 
         await vm.delete(id: sub.id)
 
-        #expect(repo.deletedIDs.contains(sub.id))
-        #expect(payments.deletedSubscriptionIDs.contains(sub.id))
-        #expect(scheduling.canceledIDs.contains(sub.id))
+        #expect(await repo.deletedIDs.contains(sub.id))
+        #expect(await payments.deletedSubscriptionIDs.contains(sub.id))
+        #expect(await scheduling.canceledIDs.contains(sub.id))
     }
 
     @Test("presentAdd routes to router.presentAdd")
-    func presentAddRoutesToRouter() {
+    func presentAddRoutesToRouter() async {
         let router = FakeSubscriptionsRouter()
-        let (vm, _, _, _) = makeViewModel(router: router)
+        let (vm, _, _, _) = await makeViewModel(router: router)
         vm.presentAdd()
         #expect(router.presentAddCallCount == 1)
     }
 
     @Test("showDetail forwards id to router")
-    func showDetailForwardsToRouter() {
+    func showDetailForwardsToRouter() async {
         let router = FakeSubscriptionsRouter()
-        let (vm, _, _, _) = makeViewModel(router: router)
+        let (vm, _, _, _) = await makeViewModel(router: router)
         let id = UUID()
         vm.showDetail(id)
         #expect(router.showDetailIDs == [id])
