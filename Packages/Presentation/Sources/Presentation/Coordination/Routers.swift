@@ -17,7 +17,7 @@ public protocol SubscriptionsRouter: AnyObject {
 
 @MainActor
 public protocol AnalyticsRouter: AnyObject {
-    func showCategoryDetail(_ category: Category)
+    func showCategoryDetail(_ category: Domain.Category)
 }
 
 @MainActor

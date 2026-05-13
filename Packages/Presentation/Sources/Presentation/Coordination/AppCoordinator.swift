@@ -37,7 +37,7 @@ public enum DashboardRoute: Hashable, Sendable {
 }
 
 public enum AnalyticsRoute: Hashable, Sendable {
-    case category(Category)
+    case category(Domain.Category)
 }
 
 @Observable
@@ -87,7 +87,7 @@ extension AppCoordinator: SubscriptionsRouter {
 }
 
 extension AppCoordinator: AnalyticsRouter {
-    public func showCategoryDetail(_ category: Category) {
+    public func showCategoryDetail(_ category: Domain.Category) {
         analyticsPath.append(AnalyticsRoute.category(category))
     }
 }
