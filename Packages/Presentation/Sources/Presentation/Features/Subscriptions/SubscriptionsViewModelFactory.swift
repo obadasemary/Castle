@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-public protocol SubscriptionsViewModelFactory: AnyObject {
+public protocol SubscriptionsViewModelFactory: AnyObject, Sendable {
     func makeSubscriptionsListViewModel() -> SubscriptionsListViewModel
     func makeSubscriptionDetailViewModel(id: UUID) -> SubscriptionDetailViewModel
     func makeAddSubscriptionViewModel() -> AddSubscriptionViewModel
