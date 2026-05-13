@@ -7,10 +7,8 @@ public struct SubscriptionsPlaceholderView: View {
         NavigationStack {
             EmptyStateView(
                 symbolName: "creditcard.fill",
-                title: "No subscriptions yet",
-                message: "PR 5 will wire up the active list, detail view, and the add-from-catalog flow.",
-                actionTitle: "Add subscription",
-                action: {}
+                title: "Subscriptions",
+                message: "Inject a SubscriptionsViewModelFactory to wire up the live list."
             )
             .navigationTitle("Subscriptions")
         }

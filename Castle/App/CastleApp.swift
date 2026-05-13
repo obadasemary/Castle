@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import Presentation
 
 @main
 struct CastleApp: App {
@@ -9,6 +10,7 @@ struct CastleApp: App {
         WindowGroup {
             RootView()
                 .environment(environment)
+                .environment(\.subscriptionsViewModelFactory, environment.container)
                 .modelContainer(environment.container.modelContainer)
         }
     }

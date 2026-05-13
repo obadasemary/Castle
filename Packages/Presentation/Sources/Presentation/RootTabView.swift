@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct RootTabView: View {
     private let coordinator: AppCoordinator
+    @Environment(\.subscriptionsViewModelFactory) private var subscriptionsFactory
 
     public init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -16,11 +17,17 @@ public struct RootTabView: View {
                 }
                 .tag(AppTab.dashboard)
 
-            SubscriptionsPlaceholderView()
-                .tabItem {
-                    Label(AppTab.subscriptions.title, systemImage: AppTab.subscriptions.symbolName)
+            Group {
+                if let subscriptionsFactory {
+                    SubscriptionsListView(coordinator: coordinator, factory: subscriptionsFactory)
+                } else {
+                    SubscriptionsPlaceholderView()
                 }
-                .tag(AppTab.subscriptions)
+            }
+            .tabItem {
+                Label(AppTab.subscriptions.title, systemImage: AppTab.subscriptions.symbolName)
+            }
+            .tag(AppTab.subscriptions)
 
             AnalyticsPlaceholderView()
                 .tabItem {

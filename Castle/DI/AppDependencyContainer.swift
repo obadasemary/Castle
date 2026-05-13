@@ -65,3 +65,64 @@ final class AppDependencyContainer {
         )
     }
 }
+
+extension AppDependencyContainer: SubscriptionsViewModelFactory {
+    func makeSubscriptionsListViewModel() -> SubscriptionsListViewModel {
+        SubscriptionsListViewModel(
+            repository: subscriptionRepository,
+            fetchActive: FetchActiveSubscriptionsUseCase(repository: subscriptionRepository),
+            archiveUseCase: ArchiveSubscriptionUseCase(
+                repository: subscriptionRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            deleteUseCase: DeleteSubscriptionUseCase(
+                subscriptionRepository: subscriptionRepository,
+                paymentRepository: paymentRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            router: coordinator
+        )
+    }
+
+    func makeSubscriptionDetailViewModel(id: UUID) -> SubscriptionDetailViewModel {
+        SubscriptionDetailViewModel(
+            subscriptionID: id,
+            fetchDetail: FetchSubscriptionDetailUseCase(
+                subscriptionRepository: subscriptionRepository,
+                paymentRepository: paymentRepository,
+                clock: clock,
+                calendarProvider: calendarProvider
+            ),
+            updateUseCase: UpdateSubscriptionUseCase(
+                repository: subscriptionRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            archiveUseCase: ArchiveSubscriptionUseCase(
+                repository: subscriptionRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            deleteUseCase: DeleteSubscriptionUseCase(
+                subscriptionRepository: subscriptionRepository,
+                paymentRepository: paymentRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            router: coordinator
+        )
+    }
+
+    func makeAddSubscriptionViewModel() -> AddSubscriptionViewModel {
+        AddSubscriptionViewModel(
+            listPopular: ListPopularServicesUseCase(catalog: popularServicesCatalog),
+            validate: ValidateSubscriptionInputUseCase(clock: clock),
+            suggestNextDate: SuggestNextBillingDateUseCase(
+                clock: clock,
+                calendarProvider: calendarProvider
+            ),
+            addUseCase: AddSubscriptionUseCase(
+                repository: subscriptionRepository,
+                reminderScheduling: reminderScheduler
+            ),
+            router: coordinator
+        )
+    }
+}
