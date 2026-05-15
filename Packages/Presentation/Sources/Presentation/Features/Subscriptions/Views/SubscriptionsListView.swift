@@ -43,6 +43,9 @@ public struct SubscriptionsListView: View {
                         onClose: { coordinator.isPresentingAddSubscription = false }
                     )
                 }
+                .onChange(of: coordinator.isPresentingAddSubscription) { _, isPresenting in
+                    if !isPresenting { Task { await viewModel.load() } }
+                }
                 .task { await viewModel.load() }
         }
     }
