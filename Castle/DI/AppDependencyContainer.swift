@@ -151,3 +151,19 @@ extension AppDependencyContainer: DashboardViewModelFactory {
         )
     }
 }
+
+extension AppDependencyContainer: AnalyticsViewModelFactory {
+    func makeAnalyticsViewModel() -> AnalyticsViewModel {
+        AnalyticsViewModel(
+            userProfileRepository: userProfileRepository,
+            buildBreakdown: BuildCategoryBreakdownUseCase(repository: subscriptionRepository),
+            buildTrend: BuildSpendingTrendUseCase(
+                paymentRepository: paymentRepository,
+                clock: clock,
+                calendarProvider: calendarProvider
+            ),
+            calculateMonthlySpend: CalculateMonthlySpendUseCase(repository: subscriptionRepository),
+            router: coordinator
+        )
+    }
+}

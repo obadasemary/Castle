@@ -4,6 +4,7 @@ public struct RootTabView: View {
     private let coordinator: AppCoordinator
     @Environment(\.subscriptionsViewModelFactory) private var subscriptionsFactory
     @Environment(\.dashboardViewModelFactory) private var dashboardFactory
+    @Environment(\.analyticsViewModelFactory) private var analyticsFactory
 
     public init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -36,11 +37,17 @@ public struct RootTabView: View {
             }
             .tag(AppTab.subscriptions)
 
-            AnalyticsPlaceholderView()
-                .tabItem {
-                    Label(AppTab.analytics.title, systemImage: AppTab.analytics.symbolName)
+            Group {
+                if let analyticsFactory {
+                    AnalyticsView(coordinator: coordinator, factory: analyticsFactory)
+                } else {
+                    AnalyticsPlaceholderView()
                 }
-                .tag(AppTab.analytics)
+            }
+            .tabItem {
+                Label(AppTab.analytics.title, systemImage: AppTab.analytics.symbolName)
+            }
+            .tag(AppTab.analytics)
 
             SettingsPlaceholderView()
                 .tabItem {

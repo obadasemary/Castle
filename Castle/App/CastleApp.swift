@@ -12,6 +12,7 @@ struct CastleApp: App {
                 .environment(environment)
                 .environment(\.subscriptionsViewModelFactory, environment.container)
                 .environment(\.dashboardViewModelFactory, environment.container)
+                .environment(\.analyticsViewModelFactory, environment.container)
                 .modelContainer(environment.container.modelContainer)
         }
     }
