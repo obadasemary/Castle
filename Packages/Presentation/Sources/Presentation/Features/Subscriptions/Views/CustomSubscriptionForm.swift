@@ -11,7 +11,10 @@ public struct CustomSubscriptionForm: View {
         self.onSaved = onSaved
     }
 
-    private let currencyCodes = ["USD", "EUR", "GBP", "JPY", "INR", "CAD", "AUD"]
+    private let currencyCodes = [
+        "USD", "EUR", "GBP", "JPY", "INR", "CAD", "AUD",
+        "SAR", "AED", "EGP", "TRY", "KWD", "QAR", "BHD", "OMR", "JOD"
+    ]
     private let billingCycles: [BillingCycle] = [.monthly, .annual]
 
     public var body: some View {

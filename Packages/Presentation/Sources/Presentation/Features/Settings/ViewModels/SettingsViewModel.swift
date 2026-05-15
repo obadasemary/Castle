@@ -13,7 +13,10 @@ public final class SettingsViewModel {
         case error(String)
     }
 
-    public static let supportedCurrencyCodes = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "INR"]
+    public static let supportedCurrencyCodes = [
+        "USD", "EUR", "GBP", "JPY", "CAD", "AUD", "INR",
+        "SAR", "AED", "EGP", "TRY", "KWD", "QAR", "BHD", "OMR", "JOD"
+    ]
     public static let leadDayRange = 0...14
 
     public var state: State = .idle

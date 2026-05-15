@@ -156,6 +156,32 @@ struct SettingsViewModelTests {
         #expect(vm.authStatus == .denied)
     }
 
+    @Test("supportedCurrencyCodes includes Middle-East currencies")
+    func supportedCurrencyCodesIncludesMiddleEast() {
+        let codes = SettingsViewModel.supportedCurrencyCodes
+        let expected = ["SAR", "AED", "EGP", "TRY", "KWD", "QAR", "BHD", "OMR", "JOD"]
+        for code in expected {
+            #expect(codes.contains(code), "Missing currency: \(code)")
+        }
+    }
+
+    @Test(
+        "saveProfile and load round-trip with Middle-East currency",
+        arguments: ["SAR", "AED", "EGP", "TRY", "KWD", "QAR", "BHD", "OMR", "JOD"]
+    )
+    func saveProfileRoundTripMiddleEastCurrency(code: String) async {
+        let (vm, profileRepo, _, _) = await makeViewModel()
+        await vm.load()
+
+        vm.preferredCurrencyCode = code
+        vm.monthlyBudgetAmount = "200"
+        await vm.saveProfile()
+
+        let saved = await profileRepo.profile
+        #expect(saved?.preferredCurrencyCode == code)
+        #expect(saved?.monthlyBudget == Money(amount: 200, currencyCode: code))
+    }
+
     @Test("openSystemSettings forwards to router")
     func openSystemSettingsRoutes() async {
         let router = FakeSettingsRouter()

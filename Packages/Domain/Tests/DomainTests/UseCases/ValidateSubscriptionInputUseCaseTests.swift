@@ -76,6 +76,19 @@ struct ValidateSubscriptionInputUseCaseTests {
         #expect(errors.contains(.pastBillingDate))
     }
 
+    @Test(
+        "Middle-East currency codes pass validation",
+        arguments: ["SAR", "AED", "EGP", "TRY", "KWD", "QAR", "BHD", "OMR", "JOD"]
+    )
+    func middleEastCurrencyCodesPassValidation(code: String) {
+        var input = validInput()
+        input.currencyCode = code
+        let result = useCase.execute(input)
+        if case .failure(let errors) = result {
+            Issue.record("Expected \(code) to pass validation but got errors: \(errors)")
+        }
+    }
+
     @Test("Multiple errors returned together")
     func multipleErrors() {
         var input = validInput()
