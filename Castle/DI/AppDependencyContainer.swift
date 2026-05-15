@@ -18,6 +18,7 @@ final class AppDependencyContainer {
     let notificationSettingsRepository: any NotificationSettingsRepository
     let userProfileRepository: any UserProfileRepository
     let reminderScheduler: any SubscriptionReminderScheduling
+    let notificationAuthorizationService: any NotificationAuthorizationService
 
     private init(
         modelContainer: ModelContainer,
@@ -29,7 +30,8 @@ final class AppDependencyContainer {
         paymentRepository: any PaymentRepository,
         notificationSettingsRepository: any NotificationSettingsRepository,
         userProfileRepository: any UserProfileRepository,
-        reminderScheduler: any SubscriptionReminderScheduling
+        reminderScheduler: any SubscriptionReminderScheduling,
+        notificationAuthorizationService: any NotificationAuthorizationService
     ) {
         self.modelContainer = modelContainer
         self.coordinator = coordinator
@@ -41,6 +43,7 @@ final class AppDependencyContainer {
         self.notificationSettingsRepository = notificationSettingsRepository
         self.userProfileRepository = userProfileRepository
         self.reminderScheduler = reminderScheduler
+        self.notificationAuthorizationService = notificationAuthorizationService
     }
 
     static func live() -> AppDependencyContainer {
@@ -61,7 +64,8 @@ final class AppDependencyContainer {
             paymentRepository: SwiftDataPaymentRepository(modelContainer: modelContainer),
             notificationSettingsRepository: SwiftDataNotificationSettingsRepository(modelContainer: modelContainer),
             userProfileRepository: SwiftDataUserProfileRepository(modelContainer: modelContainer),
-            reminderScheduler: UNUserNotificationScheduler()
+            reminderScheduler: UNUserNotificationScheduler(),
+            notificationAuthorizationService: UNNotificationAuthorizationService()
         )
     }
 }
@@ -163,6 +167,18 @@ extension AppDependencyContainer: AnalyticsViewModelFactory {
                 calendarProvider: calendarProvider
             ),
             calculateMonthlySpend: CalculateMonthlySpendUseCase(repository: subscriptionRepository),
+            router: coordinator
+        )
+    }
+}
+
+extension AppDependencyContainer: SettingsViewModelFactory {
+    func makeSettingsViewModel() -> SettingsViewModel {
+        SettingsViewModel(
+            userProfileRepository: userProfileRepository,
+            notificationSettingsRepository: notificationSettingsRepository,
+            toggleNotificationPreference: ToggleNotificationPreferenceUseCase(repository: notificationSettingsRepository),
+            authorizationService: notificationAuthorizationService,
             router: coordinator
         )
     }

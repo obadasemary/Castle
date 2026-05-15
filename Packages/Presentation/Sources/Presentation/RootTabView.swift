@@ -5,6 +5,7 @@ public struct RootTabView: View {
     @Environment(\.subscriptionsViewModelFactory) private var subscriptionsFactory
     @Environment(\.dashboardViewModelFactory) private var dashboardFactory
     @Environment(\.analyticsViewModelFactory) private var analyticsFactory
+    @Environment(\.settingsViewModelFactory) private var settingsFactory
 
     public init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -49,11 +50,17 @@ public struct RootTabView: View {
             }
             .tag(AppTab.analytics)
 
-            SettingsPlaceholderView()
-                .tabItem {
-                    Label(AppTab.settings.title, systemImage: AppTab.settings.symbolName)
+            Group {
+                if let settingsFactory {
+                    SettingsView(coordinator: coordinator, factory: settingsFactory)
+                } else {
+                    SettingsPlaceholderView()
                 }
-                .tag(AppTab.settings)
+            }
+            .tabItem {
+                Label(AppTab.settings.title, systemImage: AppTab.settings.symbolName)
+            }
+            .tag(AppTab.settings)
         }
         .tint(Color.castleAccentBrand)
     }
