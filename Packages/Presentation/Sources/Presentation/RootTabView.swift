@@ -3,6 +3,7 @@ import SwiftUI
 public struct RootTabView: View {
     private let coordinator: AppCoordinator
     @Environment(\.subscriptionsViewModelFactory) private var subscriptionsFactory
+    @Environment(\.dashboardViewModelFactory) private var dashboardFactory
 
     public init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -11,11 +12,17 @@ public struct RootTabView: View {
     public var body: some View {
         @Bindable var coordinator = coordinator
         TabView(selection: $coordinator.selectedTab) {
-            DashboardPlaceholderView()
-                .tabItem {
-                    Label(AppTab.dashboard.title, systemImage: AppTab.dashboard.symbolName)
+            Group {
+                if let dashboardFactory {
+                    DashboardView(coordinator: coordinator, factory: dashboardFactory)
+                } else {
+                    DashboardPlaceholderView()
                 }
-                .tag(AppTab.dashboard)
+            }
+            .tabItem {
+                Label(AppTab.dashboard.title, systemImage: AppTab.dashboard.symbolName)
+            }
+            .tag(AppTab.dashboard)
 
             Group {
                 if let subscriptionsFactory {

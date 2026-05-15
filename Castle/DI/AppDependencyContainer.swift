@@ -126,3 +126,28 @@ extension AppDependencyContainer: SubscriptionsViewModelFactory {
         )
     }
 }
+
+extension AppDependencyContainer: DashboardViewModelFactory {
+    func makeDashboardViewModel() -> DashboardViewModel {
+        DashboardViewModel(
+            userProfileRepository: userProfileRepository,
+            calculateMonthlySpend: CalculateMonthlySpendUseCase(repository: subscriptionRepository),
+            buildSpendingTrend: BuildSpendingTrendUseCase(
+                paymentRepository: paymentRepository,
+                clock: clock,
+                calendarProvider: calendarProvider
+            ),
+            calculateBudgetProgress: CalculateBudgetProgressUseCase(
+                subscriptionRepository: subscriptionRepository,
+                userProfileRepository: userProfileRepository
+            ),
+            fetchUpcoming: FetchUpcomingPaymentsUseCase(
+                repository: subscriptionRepository,
+                clock: clock,
+                calendarProvider: calendarProvider
+            ),
+            fetchRecentActivity: FetchRecentActivityUseCase(paymentRepository: paymentRepository),
+            router: coordinator
+        )
+    }
+}

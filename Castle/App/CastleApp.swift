@@ -11,6 +11,7 @@ struct CastleApp: App {
             RootView()
                 .environment(environment)
                 .environment(\.subscriptionsViewModelFactory, environment.container)
+                .environment(\.dashboardViewModelFactory, environment.container)
                 .modelContainer(environment.container.modelContainer)
         }
     }

@@ -1,7 +1,7 @@
 import Core
 import Foundation
 
-public struct BudgetProgress: Sendable {
+public struct BudgetProgress: Hashable, Sendable {
     public let spent: Money
     public let budget: Money
     public let fraction: Double  // 0...1, capped at 1.0
