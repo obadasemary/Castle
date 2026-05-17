@@ -6,14 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CA571E0001000000000000C1 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = CA571E0001000000000000B1 /* Core */; };
+		CA571E0001000000000000C2 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = CA571E0001000000000000B2 /* Domain */; };
+		CA571E0001000000000000C3 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = CA571E0001000000000000B3 /* Data */; };
+		CA571E0001000000000000C4 /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = CA571E0001000000000000B4 /* Presentation */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		AFD489972FB1D40F00DF11D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AFD489812FB1D40E00DF11D7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AFD489882FB1D40E00DF11D7;
-			remoteInfo = Castle;
-		};
 		AFD489A12FB1D40F00DF11D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AFD489812FB1D40E00DF11D7 /* Project object */;
@@ -25,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		AFD489892FB1D40E00DF11D7 /* Castle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castle.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFD489962FB1D40F00DF11D7 /* CastleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CastleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD489A02FB1D40F00DF11D7 /* CastleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CastleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -33,11 +32,6 @@
 		AFD4898B2FB1D40E00DF11D7 /* Castle */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Castle;
-			sourceTree = "<group>";
-		};
-		AFD489992FB1D40F00DF11D7 /* CastleTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CastleTests;
 			sourceTree = "<group>";
 		};
 		AFD489A32FB1D40F00DF11D7 /* CastleUITests */ = {
@@ -52,13 +46,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AFD489932FB1D40F00DF11D7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				CA571E0001000000000000C1 /* Core in Frameworks */,
+				CA571E0001000000000000C2 /* Domain in Frameworks */,
+				CA571E0001000000000000C3 /* Data in Frameworks */,
+				CA571E0001000000000000C4 /* Presentation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				AFD4898B2FB1D40E00DF11D7 /* Castle */,
-				AFD489992FB1D40F00DF11D7 /* CastleTests */,
 				AFD489A32FB1D40F00DF11D7 /* CastleUITests */,
 				AFD4898A2FB1D40E00DF11D7 /* Products */,
 			);
@@ -86,7 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				AFD489892FB1D40E00DF11D7 /* Castle.app */,
-				AFD489962FB1D40F00DF11D7 /* CastleTests.xctest */,
 				AFD489A02FB1D40F00DF11D7 /* CastleUITests.xctest */,
 			);
 			name = Products;
@@ -112,33 +101,14 @@
 			);
 			name = Castle;
 			packageProductDependencies = (
+				CA571E0001000000000000B1 /* Core */,
+				CA571E0001000000000000B2 /* Domain */,
+				CA571E0001000000000000B3 /* Data */,
+				CA571E0001000000000000B4 /* Presentation */,
 			);
 			productName = Castle;
 			productReference = AFD489892FB1D40E00DF11D7 /* Castle.app */;
 			productType = "com.apple.product-type.application";
-		};
-		AFD489952FB1D40F00DF11D7 /* CastleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AFD489AD2FB1D40F00DF11D7 /* Build configuration list for PBXNativeTarget "CastleTests" */;
-			buildPhases = (
-				AFD489922FB1D40F00DF11D7 /* Sources */,
-				AFD489932FB1D40F00DF11D7 /* Frameworks */,
-				AFD489942FB1D40F00DF11D7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AFD489982FB1D40F00DF11D7 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				AFD489992FB1D40F00DF11D7 /* CastleTests */,
-			);
-			name = CastleTests;
-			packageProductDependencies = (
-			);
-			productName = CastleTests;
-			productReference = AFD489962FB1D40F00DF11D7 /* CastleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		AFD4899F2FB1D40F00DF11D7 /* CastleUITests */ = {
 			isa = PBXNativeTarget;
@@ -171,14 +141,10 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2640;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					AFD489882FB1D40E00DF11D7 = {
 						CreatedOnToolsVersion = 26.4.1;
-					};
-					AFD489952FB1D40F00DF11D7 = {
-						CreatedOnToolsVersion = 26.4.1;
-						TestTargetID = AFD489882FB1D40E00DF11D7;
 					};
 					AFD4899F2FB1D40F00DF11D7 = {
 						CreatedOnToolsVersion = 26.4.1;
@@ -195,13 +161,18 @@
 			);
 			mainGroup = AFD489802FB1D40E00DF11D7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CA571E0001000000000000A1 /* XCLocalSwiftPackageReference "Packages/Core" */,
+				CA571E0001000000000000A2 /* XCLocalSwiftPackageReference "Packages/Domain" */,
+				CA571E0001000000000000A3 /* XCLocalSwiftPackageReference "Packages/Data" */,
+				CA571E0001000000000000A4 /* XCLocalSwiftPackageReference "Packages/Presentation" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AFD4898A2FB1D40E00DF11D7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				AFD489882FB1D40E00DF11D7 /* Castle */,
-				AFD489952FB1D40F00DF11D7 /* CastleTests */,
 				AFD4899F2FB1D40F00DF11D7 /* CastleUITests */,
 			);
 		};
@@ -209,13 +180,6 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		AFD489872FB1D40E00DF11D7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AFD489942FB1D40F00DF11D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -239,13 +203,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AFD489922FB1D40F00DF11D7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AFD4899C2FB1D40F00DF11D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -256,11 +213,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AFD489982FB1D40F00DF11D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AFD489882FB1D40E00DF11D7 /* Castle */;
-			targetProxy = AFD489972FB1D40F00DF11D7 /* PBXContainerItemProxy */;
-		};
 		AFD489A22FB1D40F00DF11D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AFD489882FB1D40E00DF11D7 /* Castle */;
@@ -303,6 +255,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = KM569NM77P;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -326,6 +279,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -365,6 +319,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = KM569NM77P;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -381,6 +336,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -393,10 +349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KM569NM77P;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -410,22 +363,18 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.Castle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 26.4;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -437,10 +386,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KM569NM77P;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -454,74 +400,18 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.Castle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 26.4;
-			};
-			name = Release;
-		};
-		AFD489AE2FB1D40F00DF11D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KM569NM77P;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.CastleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Castle.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Castle";
-				XROS_DEPLOYMENT_TARGET = 26.4;
-			};
-			name = Debug;
-		};
-		AFD489AF2FB1D40F00DF11D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KM569NM77P;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.CastleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Castle.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Castle";
-				XROS_DEPLOYMENT_TARGET = 26.4;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -533,20 +423,18 @@
 				DEVELOPMENT_TEAM = KM569NM77P;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.CastleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Castle;
-				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Debug;
 		};
@@ -558,20 +446,18 @@
 				DEVELOPMENT_TEAM = KM569NM77P;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.CastleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
+				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Castle;
-				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Release;
 		};
@@ -596,15 +482,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AFD489AD2FB1D40F00DF11D7 /* Build configuration list for PBXNativeTarget "CastleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AFD489AE2FB1D40F00DF11D7 /* Debug */,
-				AFD489AF2FB1D40F00DF11D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		AFD489B02FB1D40F00DF11D7 /* Build configuration list for PBXNativeTarget "CastleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -615,6 +492,44 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		CA571E0001000000000000A1 /* XCLocalSwiftPackageReference "Packages/Core" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Core;
+		};
+		CA571E0001000000000000A2 /* XCLocalSwiftPackageReference "Packages/Domain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Domain;
+		};
+		CA571E0001000000000000A3 /* XCLocalSwiftPackageReference "Packages/Data" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Data;
+		};
+		CA571E0001000000000000A4 /* XCLocalSwiftPackageReference "Packages/Presentation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Presentation;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA571E0001000000000000B1 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
+		CA571E0001000000000000B2 /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		CA571E0001000000000000B3 /* Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Data;
+		};
+		CA571E0001000000000000B4 /* Presentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Presentation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFD489812FB1D40E00DF11D7 /* Project object */;
 }
